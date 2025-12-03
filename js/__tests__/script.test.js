@@ -14,6 +14,7 @@ function setupDom() {
         <div id="score-x"></div>
         <div id="score-y"></div>
         <div id="messages"></div>
+        <div id="round-info"></div>
         <button id="next-button"></button>
         <button id="reset-button"></button>
         <button id="apply-players"></button>

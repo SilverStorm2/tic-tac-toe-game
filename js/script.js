@@ -1,6 +1,8 @@
 let currentPlayer = 'X';
 let board = ['', '', '', '', '', '', '', '', ''];
 let gameActive = true;
+const maxRounds = 10;
+let roundsPlayed = 0;
 const playerXInput = document.getElementById('player-x-name');
 const playerYInput = document.getElementById('player-y-name');
 const currentPlayerInfo = document.getElementById('current-player');
@@ -8,6 +10,7 @@ const playerXLabel = document.getElementById('player-x-label');
 const playerYLabel = document.getElementById('player-y-label');
 const scoreXCell = document.getElementById('score-x');
 const scoreYCell = document.getElementById('score-y');
+const roundInfo = document.getElementById('round-info');
 let players = {
     X: playerXInput?.value?.trim() || 'Gracz X',
     Y: playerYInput?.value?.trim() || 'Gracz Y'
@@ -39,6 +42,12 @@ function updateScoreboard() {
     playerYLabel.textContent = players.Y;
     scoreXCell.textContent = scores.X;
     scoreYCell.textContent = scores.Y;
+}
+
+function updateRoundInfo() {
+    if (roundInfo) {
+        roundInfo.textContent = `Rozegrane: ${roundsPlayed}/${maxRounds}`;
+    }
 }
 
 function incrementScore(playerKey) {
@@ -89,16 +98,14 @@ function checkResult() {
     }
 
     if (roundWon) {
-        printMessage('Wygrywa ' + players[currentPlayer] + ' (' + currentPlayer + ')!');
-        gameActive = false;
         incrementScore(currentPlayer);
+        endRound('Wygrywa ' + players[currentPlayer] + ' (' + currentPlayer + ')!');
         return;
     }
 
     let roundDraw = !board.includes('');
     if (roundDraw) {
-        printMessage('Remis!');
-        gameActive = false;
+        endRound('Remis!');
         return;
     }
 
@@ -106,8 +113,27 @@ function checkResult() {
     updateTurnInfo();
 }
 
+function endRound(baseMessage) {
+    let message = baseMessage;
+    const limitReached = roundsPlayed + 1 >= maxRounds;
+    if (limitReached) {
+        message = `${baseMessage} Osiągnięto limit ${maxRounds} gier. Wybierz "Nowa gra" aby zacząć od nowa.`;
+    }
+    printMessage(message);
+    gameActive = false;
+    roundsPlayed += 1;
+    updateRoundInfo();
+}
+
 function resetGame(resetScores = false) {
+    if (!resetScores && roundsPlayed >= maxRounds) {
+        printMessage(`Osiągnięto limit ${maxRounds} gier. Wybierz "Nowa gra" aby zacząć od nowa.`);
+        return;
+    }
     setPlayersFromInputs(resetScores);
+    if (resetScores) {
+        roundsPlayed = 0;
+    }
     currentPlayer = 'X';
     board = ['', '', '', '', '', '', '', '', ''];
     gameActive = true;
@@ -115,13 +141,21 @@ function resetGame(resetScores = false) {
     document.querySelectorAll('.cell').forEach(cell => cell.textContent = '');
     updateTurnInfo();
     updateScoreboard();
+    updateRoundInfo();
 }
 
 document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
 document.getElementById('next-button').addEventListener('click', () => resetGame(false));
-document.getElementById('reset-button').addEventListener('click', () => resetGame(true));
-document.getElementById('apply-players').addEventListener('click', () => {
+document.getElementById('reset-button').addEventListener('click', () => {
+    playerXInput.value = '';
+    playerYInput.value = '';
     resetGame(true);
+});
+document.getElementById('apply-players').addEventListener('click', () => {
+    // Aktualizujemy nazwy bez resetowania wyników ani licznika rund
+    setPlayersFromInputs(false);
+    updateTurnInfo();
+    updateScoreboard();
 });
 
 resetGame(true);
@@ -138,7 +172,9 @@ if (typeof module !== 'undefined') {
             board: [...board],
             gameActive,
             players: { ...players },
-            scores: { ...scores }
+            scores: { ...scores },
+            roundsPlayed,
+            maxRounds
         })
     };
 }
