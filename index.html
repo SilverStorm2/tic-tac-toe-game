@@ -11,6 +11,20 @@
 <body class="d-flex justify-content-center align-items-center vh-100">
     <div class="container text-center">
         <h1 class="mb-4">Kółko i Krzyżyk</h1>
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4">
+                <label class="form-label" for="player-x-name">Gracz X</label>
+                <input class="form-control" id="player-x-name" type="text" placeholder="Gracz X" value="Gracz X">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="player-y-name">Gracz Y</label>
+                <input class="form-control" id="player-y-name" type="text" placeholder="Gracz Y" value="Gracz Y">
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
+            <div id="current-player" class="fw-bold"></div>
+            <button id="apply-players" class="btn btn-secondary" type="button">Zapisz graczy</button>
+        </div>
         <div id="board" class="d-grid grid-template-columns-3x3 gap-2">
             <div class="cell border border-primary" id="cell-0"></div>
             <div class="cell border border-primary" id="cell-1"></div>
@@ -22,7 +36,38 @@
             <div class="cell border border-primary" id="cell-7"></div>
             <div class="cell border border-primary" id="cell-8"></div>
         </div>
-        <button id="reset-button" class="btn btn-primary mt-4" type="button">Nowa gra</button>
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <button id="next-button" class="btn btn-outline-primary" type="button">Następna</button>
+            <button id="reset-button" class="btn btn-primary" type="button">Nowa gra</button>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Tabela wyników</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Gracz</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Wygrane</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="player-x-label">Gracz X</td>
+                                <td>X</td>
+                                <td id="score-x">0</td>
+                            </tr>
+                            <tr>
+                                <td id="player-y-label">Gracz Y</td>
+                                <td>Y</td>
+                                <td id="score-y">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div id="messages" class="alert alert-info mt-4"></div>
     </div>
 
