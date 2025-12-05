@@ -53,6 +53,12 @@ To run this game locally, follow these steps:
 - **Score Tracking:** Add a scoreboard to keep track of wins, losses, and draws.
 - **Animations:** Add animations for winning moves and other game events.
 
+## Deployment (Vercel)
+
+1. Ensure the compiled assets are up to date: `npm run build` (compiles Sass and autoprefixes CSS).
+2. Install the Vercel CLI if you want to deploy from the terminal: `npm i -g vercel`.
+3. Deploy from the project root with `vercel` (or use the Vercel dashboard). The included `vercel.json` serves the site as a static build, and `.vercelignore` keeps `node_modules` and other dev artifacts out of the upload.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -1,0 +1,5 @@
+node_modules
+sass
+vendor
+*.log
+.DS_Store
