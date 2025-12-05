@@ -3,6 +3,7 @@ body {
   background: radial-gradient(circle at 20% 20%, #1f2940, #0e1220 50%), radial-gradient(circle at 80% 0%, #1e3755, transparent 40%), #0b1020;
   color: #e8ecf5;
   margin: 0;
+  min-height: 100vh;
 }
 
 h1 {
@@ -59,6 +60,16 @@ h1 {
   color: #0b1020;
   box-shadow: 0 10px 24px rgba(114, 247, 253, 0.35);
   transform: translateY(-1px);
+}
+
+.app-navbar {
+  background: rgba(9, 15, 28, 0.75);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid #1e2d4b;
+}
+
+.app-shell {
+  max-width: 960px;
 }
 
 .card {
